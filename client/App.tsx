@@ -40,19 +40,19 @@ const App = () => {
 };
 
 const rootElement = document.getElementById("root")!;
-declare const window: { __vite_react_root?: any };
+const w = window as any;
 
 // Only create root if it doesn't exist
-if (!window.__vite_react_root) {
-  window.__vite_react_root = createRoot(rootElement);
+if (!w.__vite_react_root) {
+  w.__vite_react_root = createRoot(rootElement);
 }
 
 // Render with existing root
-window.__vite_react_root.render(<App />);
+w.__vite_react_root.render(<App />);
 
 // Handle HMR - just re-render, don't recreate root
 if (import.meta.hot) {
   import.meta.hot.accept([], () => {
-    window.__vite_react_root?.render(<App />);
+    w.__vite_react_root?.render(<App />);
   });
 }
