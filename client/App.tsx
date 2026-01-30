@@ -48,9 +48,18 @@ declare global {
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-  if (!window.__REACT_APP_ROOT__) {
-    window.__REACT_APP_ROOT__ = createRoot(rootElement);
+  let root = window.__REACT_APP_ROOT__;
+
+  if (!root) {
+    root = createRoot(rootElement);
+    window.__REACT_APP_ROOT__ = root;
   }
 
-  window.__REACT_APP_ROOT__.render(<App />);
+  root.render(<App />);
+
+  if (import.meta.hot) {
+    import.meta.hot.accept([], () => {
+      root.render(<App />);
+    });
+  }
 }
