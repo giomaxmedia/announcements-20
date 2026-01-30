@@ -39,18 +39,34 @@ const App = () => {
   );
 };
 
-const rootElement = document.getElementById("root")!;
-const w = window as any;
+function initApp() {
+  const rootElement = document.getElementById("root");
+  if (!rootElement) return;
 
-// Use a global flag to ensure we only create the root once
-if (!w.__APP_ROOT__) {
-  w.__APP_ROOT__ = createRoot(rootElement);
+  const w = window as any;
+
+  // Create root only once
+  if (!w.__APP_ROOT__) {
+    w.__APP_ROOT__ = createRoot(rootElement);
+  }
+
+  // Always render with the existing root
+  w.__APP_ROOT__.render(<App />);
 }
 
-w.__APP_ROOT__.render(<App />);
+// Initialize on first load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
 
+// Handle HMR updates
 if (import.meta.hot) {
-  import.meta.hot.accept([], () => {
-    w.__APP_ROOT__.render(<App />);
+  import.meta.hot.accept(() => {
+    const w = window as any;
+    if (w.__APP_ROOT__) {
+      w.__APP_ROOT__.render(<App />);
+    }
   });
 }
