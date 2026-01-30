@@ -39,26 +39,17 @@ const App = () => {
   );
 };
 
-declare global {
-  interface Window {
-    __REACT_ROOT__?: any;
-  }
-}
+const rootElement = document.getElementById("root")!;
 
-const rootElement = document.getElementById("root");
-if (rootElement) {
-  let root = window.__REACT_ROOT__;
+// Create root only once at module load time
+let root = createRoot(rootElement);
 
-  if (!root) {
-    root = createRoot(rootElement);
-    window.__REACT_ROOT__ = root;
-  }
+// Initial render
+root.render(<App />);
 
-  root.render(<App />);
-
-  if (import.meta.hot) {
-    import.meta.hot.accept(() => {
-      root?.render(<App />);
-    });
-  }
+// Handle HMR updates by re-rendering with the existing root
+if (import.meta.hot) {
+  import.meta.hot.accept([], () => {
+    root.render(<App />);
+  });
 }
