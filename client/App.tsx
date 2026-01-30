@@ -39,4 +39,9 @@ const App = () => {
   );
 };
 
-createRoot(document.getElementById("root")!).render(<App />);
+const rootElement = document.getElementById("root");
+if (rootElement && !rootElement._reactRootContainer) {
+  createRoot(rootElement).render(<App />);
+} else if (rootElement) {
+  createRoot(rootElement).render(<App />);
+}
