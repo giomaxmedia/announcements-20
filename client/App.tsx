@@ -39,25 +39,26 @@ const App = () => {
   );
 };
 
-const rootElement = document.getElementById("root");
-
-function render() {
-  if (!rootElement) return;
-
-  const existingRoot = (window as any).__reactRoot;
-  if (existingRoot) {
-    existingRoot.render(<App />);
-  } else {
-    const newRoot = createRoot(rootElement);
-    newRoot.render(<App />);
-    (window as any).__reactRoot = newRoot;
+declare global {
+  interface Window {
+    __REACT_ROOT__?: any;
   }
 }
 
-render();
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  let root = window.__REACT_ROOT__;
 
-if (import.meta.hot) {
-  import.meta.hot.accept(() => {
-    render();
-  });
+  if (!root) {
+    root = createRoot(rootElement);
+    window.__REACT_ROOT__ = root;
+  }
+
+  root.render(<App />);
+
+  if (import.meta.hot) {
+    import.meta.hot.accept(() => {
+      root?.render(<App />);
+    });
+  }
 }
