@@ -39,12 +39,25 @@ const App = () => {
   );
 };
 
-let root = (window as any).__reactRoot;
 const rootElement = document.getElementById("root");
-if (rootElement) {
-  if (!root) {
-    root = createRoot(rootElement);
-    (window as any).__reactRoot = root;
+
+function render() {
+  if (!rootElement) return;
+
+  const existingRoot = (window as any).__reactRoot;
+  if (existingRoot) {
+    existingRoot.render(<App />);
+  } else {
+    const newRoot = createRoot(rootElement);
+    newRoot.render(<App />);
+    (window as any).__reactRoot = newRoot;
   }
-  root.render(<App />);
+}
+
+render();
+
+if (import.meta.hot) {
+  import.meta.hot.accept(() => {
+    render();
+  });
 }
