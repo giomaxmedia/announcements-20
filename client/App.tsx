@@ -41,25 +41,35 @@ const App = () => {
 
 declare global {
   interface Window {
-    __REACT_APP_ROOT__: any;
+    __REACT_APP_ROOT__?: Root;
+    // Legacy keys from earlier iterations (kept only to prevent duplicate root creation)
+    __APP_ROOT__?: Root;
+    __vite_react_root?: Root;
+    __reactRoot?: Root;
   }
 }
 
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-  let root = window.__REACT_APP_ROOT__;
+  const w = window;
 
-  if (!root) {
-    root = createRoot(rootElement);
-    window.__REACT_APP_ROOT__ = root;
+  const hotDataRoot = import.meta.hot?.data?.root as Root | undefined;
+  const existingRoot =
+    hotDataRoot ||
+    w.__REACT_APP_ROOT__ ||
+    w.__APP_ROOT__ ||
+    w.__vite_react_root ||
+    w.__reactRoot;
+
+  const root = existingRoot ?? createRoot(rootElement);
+
+  // Persist for future HMR updates
+  w.__REACT_APP_ROOT__ = root;
+  if (import.meta.hot) {
+    import.meta.hot.data.root = root;
+    import.meta.hot.accept();
   }
 
   root.render(<App />);
-
-  if (import.meta.hot) {
-    import.meta.hot.accept([], () => {
-      root.render(<App />);
-    });
-  }
 }
