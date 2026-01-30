@@ -5,7 +5,7 @@ export default function Index() {
         <img
           src="https://cdn.builder.io/api/v1/image/assets%2F6a56d757e6a4425a90872cf4d2f657d9%2F05f98297e18a4351b846c4f1cf0169c0?format=webp&width=800&height=1200"
           alt="Announcements icon"
-          className="w-12 h-12 mb-4 opacity-75"
+          className="w-10 h-10 mb-4 opacity-75"
         />
         <p className="text-slate-500 text-lg">
           You don't have any announcements yet
