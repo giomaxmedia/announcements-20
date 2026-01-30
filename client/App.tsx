@@ -39,18 +39,28 @@ const App = () => {
   );
 };
 
-let root = (window as any).__APP_ROOT__;
-const rootElement = document.getElementById("root")!;
+const rootElement = document.getElementById("root");
 
-if (!root) {
-  root = createRoot(rootElement);
-  (window as any).__APP_ROOT__ = root;
-}
+if (rootElement) {
+  const w = window as any;
 
-root.render(<App />);
+  if (!w.__REACT_ROOT_INITIALIZED__) {
+    const root = createRoot(rootElement);
+    w.__REACT_ROOT_INITIALIZED__ = true;
+    w.__REACT_ROOT__ = root;
+  }
 
-if (import.meta.hot) {
-  import.meta.hot.accept(() => {
+  const root = w.__REACT_ROOT__;
+  if (root) {
     root.render(<App />);
-  });
+  }
+
+  if (import.meta.hot) {
+    import.meta.hot.accept(() => {
+      const currentRoot = w.__REACT_ROOT__;
+      if (currentRoot) {
+        currentRoot.render(<App />);
+      }
+    });
+  }
 }
