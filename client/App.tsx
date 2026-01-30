@@ -42,33 +42,15 @@ const App = () => {
 const rootElement = document.getElementById("root")!;
 const w = window as any;
 
-function initializeRoot() {
-  // Check if root was already created
-  if (w.__vite_react_root) {
-    w.__vite_react_root.render(<App />);
-    return;
-  }
-
-  // Check if the container already has React mounted (from a previous load)
-  const existingReactRoot = (rootElement as any)._reactRootContainer;
-  if (existingReactRoot) {
-    w.__vite_react_root = existingReactRoot;
-    w.__vite_react_root.render(<App />);
-    return;
-  }
-
-  // Create new root only if absolutely necessary
-  w.__vite_react_root = createRoot(rootElement);
-  w.__vite_react_root.render(<App />);
+// Use a global flag to ensure we only create the root once
+if (!w.__APP_ROOT__) {
+  w.__APP_ROOT__ = createRoot(rootElement);
 }
 
-initializeRoot();
+w.__APP_ROOT__.render(<App />);
 
-// Handle HMR
 if (import.meta.hot) {
   import.meta.hot.accept([], () => {
-    if (w.__vite_react_root) {
-      w.__vite_react_root.render(<App />);
-    }
+    w.__APP_ROOT__.render(<App />);
   });
 }
