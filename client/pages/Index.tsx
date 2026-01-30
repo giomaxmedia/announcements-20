@@ -1,61 +1,29 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
-
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
-
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
+    <div className="min-h-screen w-full bg-white">
+      {/* Subtle grid background pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg width="50" height="50" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000"%3E%3Cpath d="M0 0h1v1H0z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <div className="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-slate-100 to-slate-50 border border-slate-200">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-400 to-slate-300" />
+          </div>
+          
+          <h1 className="text-4xl sm:text-5xl font-light tracking-tight text-slate-900 mb-4">
+            Blank Page
+          </h1>
+          
+          <p className="text-lg text-slate-500 max-w-md mx-auto font-light leading-relaxed">
+            A fresh start. Ready for your content.
+          </p>
+        </div>
       </div>
     </div>
   );
