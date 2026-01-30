@@ -39,9 +39,12 @@ const App = () => {
   );
 };
 
+let root = (window as any).__reactRoot;
 const rootElement = document.getElementById("root");
-if (rootElement && !rootElement._reactRootContainer) {
-  createRoot(rootElement).render(<App />);
-} else if (rootElement) {
-  createRoot(rootElement).render(<App />);
+if (rootElement) {
+  if (!root) {
+    root = createRoot(rootElement);
+    (window as any).__reactRoot = root;
+  }
+  root.render(<App />);
 }
