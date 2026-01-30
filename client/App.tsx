@@ -39,28 +39,18 @@ const App = () => {
   );
 };
 
+declare global {
+  interface Window {
+    __REACT_APP_ROOT__: any;
+  }
+}
+
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-  const w = window as any;
-
-  if (!w.__REACT_ROOT_INITIALIZED__) {
-    const root = createRoot(rootElement);
-    w.__REACT_ROOT_INITIALIZED__ = true;
-    w.__REACT_ROOT__ = root;
+  if (!window.__REACT_APP_ROOT__) {
+    window.__REACT_APP_ROOT__ = createRoot(rootElement);
   }
 
-  const root = w.__REACT_ROOT__;
-  if (root) {
-    root.render(<App />);
-  }
-
-  if (import.meta.hot) {
-    import.meta.hot.accept(() => {
-      const currentRoot = w.__REACT_ROOT__;
-      if (currentRoot) {
-        currentRoot.render(<App />);
-      }
-    });
-  }
+  window.__REACT_APP_ROOT__.render(<App />);
 }
