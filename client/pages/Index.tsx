@@ -8,7 +8,8 @@ export default function Index() {
           className="w-10 h-10 mb-4 opacity-75"
         />
         <p className="text-slate-300 text-lg text-center">
-          You don't have any<br />
+          You don't have any
+          <br />
           announcements yet
         </p>
       </div>
