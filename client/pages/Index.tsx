@@ -1,6 +1,6 @@
 export default function Index() {
   return (
-    <div className="min-h-screen w-full bg-[#333333]">
+    <div className="min-h-screen w-full bg-gray-400">
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
         <img
           src="https://cdn.builder.io/api/v1/image/assets%2F6a56d757e6a4425a90872cf4d2f657d9%2F05f98297e18a4351b846c4f1cf0169c0?format=webp&width=800&height=1200"
