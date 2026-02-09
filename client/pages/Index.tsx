@@ -7,7 +7,7 @@ export default function Index() {
           alt="Announcements icon"
           className="w-10 h-10 mb-4 opacity-75"
         />
-        <p className="text-slate-400 text-lg text-center">
+        <p className="text-slate-500 text-lg text-center">
           You don't have any
           <br />
           announcements yet
